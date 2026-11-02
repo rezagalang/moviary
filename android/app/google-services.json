@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "960652449025",
+    "project_id": "moviary-test",
+    "storage_bucket": "moviary-test.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960652449025:android:337000886d2cc282183700",
+        "android_client_info": {
+          "package_name": "io.github.rezagalang.moviary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960652449025-j7u0bjqtltpcokujfueh4obavhfaip0e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.github.rezagalang.moviary",
+            "certificate_hash": "8f639d24fabfb0f165301d2ee853e25c5d721fd5"
+          }
+        },
+        {
+          "client_id": "960652449025-7ie3a2aerjn8opmir3c6e1e025kerjdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmeNftv6kFjUFasxSs_4IbRUDsDI8mJiY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960652449025-7ie3a2aerjn8opmir3c6e1e025kerjdk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "960652449025-e83o79dialsopvnrh86u5q0r8ebcudbo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.github.rezagalang.moviary"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,53 @@
+rules_version = '2';
+
+// Moviary Firestore rules. DRAFT: not deployed until the emulator tests pass.
+//
+// Every synced document must carry: id (== document id), userId (== owner uid)
+// and an integer revision >= 1 that strictly increases on every update.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedInAs(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    function syncedCollection(name) {
+      return name in [
+        'library', 'watch_history', 'ratings', 'notes', 'watchlists',
+        'favorites', 'collections', 'collection_items', 'reminders',
+        'custom_media', 'devices', 'sync_metadata', 'backups'
+      ];
+    }
+
+    function payloadIsOwnedBy(uid, docId) {
+      let data = request.resource.data;
+      return data.userId == uid
+          && data.id == docId
+          && data.revision is int
+          && data.revision >= 1;
+    }
+
+    // Profile document.
+    match /users/{uid} {
+      allow read, write: if signedInAs(uid);
+    }
+
+    match /users/{uid}/{collection}/{docId} {
+      allow read: if signedInAs(uid);
+
+      allow create: if signedInAs(uid)
+                    && syncedCollection(collection)
+                    && payloadIsOwnedBy(uid, docId);
+
+      // Ownership is immutable and revisions only move forward.
+      allow update: if signedInAs(uid)
+                    && syncedCollection(collection)
+                    && payloadIsOwnedBy(uid, docId)
+                    && resource.data.userId == uid
+                    && request.resource.data.revision > resource.data.revision;
+
+      // Hard deletes: tombstone cleanup and account deletion.
+      allow delete: if signedInAs(uid);
+    }
+  }
+}
